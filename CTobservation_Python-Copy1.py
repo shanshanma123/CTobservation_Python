@@ -20,7 +20,7 @@ import statsmodels.api as sm
 
 # In[4]:
 
-
+#get the working directory
 import os 
 os.getcwd()
 
@@ -47,7 +47,7 @@ df1_acaclean.describe()
 
 # In[97]:
 
-
+#read file Jigsaw_performance
 df2_Jigsaw = pd.read_csv('/Users/shanshanma/Desktop/CTObservation_Python/Jigsaw_Performance.csv')
 df2_Jigsaw.info()
 df2_Jigsaw.head(5)
@@ -55,20 +55,20 @@ df2_Jigsaw.head(5)
 
 # In[98]:
 
-
+#remove missing values 
 df2_jsclean = df2_Jigsaw.dropna(axis=0, how='any')
 
 
 # In[99]:
 
-
+#an overview of the data 
 df2_jsclean.info()
 
 
 # In[73]:
 
 
-# n of each group 
+# number of participants in each group 
 df2_jsclean_tab = pd.crosstab(index=df2_jsclean["Group"],
                                columns="count")
 df2_jsclean_tab
@@ -76,7 +76,7 @@ df2_jsclean_tab
 
 # In[74]:
 
-
+# A descriptive analysis
 df2_jsclean.describe()
 
 
@@ -111,7 +111,7 @@ df2_jsclean.info()
 # In[81]:
 
 
-#Create historgrams by Group A,B,C
+#Create histograms by Group A,B,C
 df2_jsclean['Duration'].hist(by=df2_jsclean['Group'], edgecolor='black',figsize=(8,6))
 
 
@@ -125,7 +125,7 @@ rp.summary_cont(df2_jsclean['Duration'].groupby(df2_jsclean['Group']))
 
 # In[83]:
 
-
+#One-way ANOVA
 stats.f_oneway(df2_jsclean['Duration'][df2_jsclean['Group'] == 'A'],
                df2_jsclean['Duration'][df2_jsclean['Group'] == 'B'],
                df2_jsclean['Duration'][df2_jsclean['Group'] == 'C'])
@@ -133,7 +133,7 @@ stats.f_oneway(df2_jsclean['Duration'][df2_jsclean['Group'] == 'A'],
 
 # In[84]:
 
-
+#Correlations among variables 
 correlations_js = df2_jsclean[["Duration", "StrategicOptions","ObservationMode","Complete","Tipscheck"]].corr()
 correlations_js
 
@@ -141,7 +141,7 @@ correlations_js
 # In[63]:
 
 
-#regression 
+#regression 1, 
 x = df2_jsclean[['ObservationMode', 'StrategicOptions','Complete','Tipscheck']]
 y = df2_jsclean['Duration']
 x = sm.add_constant(x)
